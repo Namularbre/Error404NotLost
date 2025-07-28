@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Error404NotLost_DAL.Entities;
 
 namespace Error404NotLost_DAL
 {
@@ -9,5 +10,7 @@ namespace Error404NotLost_DAL
             : base(options)
         {
         }
+
+        public DbSet<SchoolSubject> SchoolSubjects { get; set; }
     }
 }
