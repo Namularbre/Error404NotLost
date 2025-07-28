@@ -43,7 +43,7 @@ Exemple :
 Start version is 1.0.0
 
 A hotfix for issue 123 would be `hotfix/123-1.0.1`.
-A new feature for version 1.1.0 would be `feature/1.1.0`. (or `feature/1.0.1` if the feature is realy basic)
+A new feature for version 1.1.0 would be `feature-name/1.1.0`. (or `feature-name/1.0.1` if the feature is realy basic)
 
 ## Submitting a Pull Request
 
