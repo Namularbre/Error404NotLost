@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Error404NotLost_DAL.Migrations
 {
-    [DbContext(typeof(Error404NotFoundDbContext))]
+    [DbContext(typeof(Error404NotLostDbContext))]
     partial class Error404NotFoundDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Error404NotLost_BLL\Error404NotLost_BLL.csproj" />
     <ProjectReference Include="..\Error404NotLost_DAL\Error404NotLost_DAL.csproj" />
     <ProjectReference Include="..\Error404NotLost_DTO\Error404NotLost_DTO.csproj" />
   </ItemGroup>

@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Error404NotLost_DAL\Error404NotLost_DAL.csproj" />
+    <ProjectReference Include="..\Error404NotLost_DTO\Error404NotLost_DTO.csproj" />
   </ItemGroup>
 
 </Project>

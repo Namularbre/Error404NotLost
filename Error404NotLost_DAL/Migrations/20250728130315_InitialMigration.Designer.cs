@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Error404NotLost_DAL.Migrations
 {
-    [DbContext(typeof(Error404NotFoundDbContext))]
+    [DbContext(typeof(Error404NotLostDbContext))]
     [Migration("20250728130315_InitialMigration")]
     partial class InitialMigration
     {

@@ -4,9 +4,9 @@ using Error404NotLost_DAL.Entities;
 
 namespace Error404NotLost_DAL
 {
-    public class Error404NotFoundDbContext : IdentityDbContext
+    public class Error404NotLostDbContext : IdentityDbContext
     {
-        public Error404NotFoundDbContext(DbContextOptions<Error404NotFoundDbContext> options)
+        public Error404NotLostDbContext(DbContextOptions<Error404NotLostDbContext> options)
             : base(options)
         {
         }
