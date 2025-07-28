@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Error404NotFound_DTO\Error404NotFound_DTO.csproj" />
+    <ProjectReference Include="..\Error404NotLost_DAL\Error404NotLost_DAL.csproj" />
+  </ItemGroup>
+
+</Project>
