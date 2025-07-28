@@ -17,19 +17,11 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
+    - name: Move to the directory of the project
+      run: cd /Error404NotLost_WEBASP
+
     - name: Restore dependencies
       run: dotnet restore
 
     - name: Build
       run: dotnet build --no-restore
-
-  docker-build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-
-    - name: Build Docker image
-      run: docker build -t your-image-name:${{ github.sha }} .
-
-    - name: List Docker images
-      run: docker images
