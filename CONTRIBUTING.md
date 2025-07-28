@@ -33,6 +33,18 @@ Thank you for your interest in contributing to Error 404 Not Lost! Here are some
 
 **Use present in the commit message**
 
+The name of the branch must match this format:
+- `feature/version`
+- `hotfix/issueid-version`
+
+Version must increment the minor version for features and the patch version for bug fixes.
+Exemple :
+
+Start version is 1.0.0
+
+A hotfix for issue 123 would be `hotfix/123-1.0.1`.
+A new feature for version 1.1.0 would be `feature/1.1.0`. (or `feature/1.0.1` if the feature is realy basic)
+
 ## Submitting a Pull Request
 
 1. Fork the repository and create a new branch for your feature or bug fix.
