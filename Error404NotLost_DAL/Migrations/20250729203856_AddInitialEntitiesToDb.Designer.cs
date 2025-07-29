@@ -4,6 +4,7 @@ using Error404NotLost_DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Error404NotLost_DAL.Migrations
 {
     [DbContext(typeof(Error404NotLostDbContext))]
-    partial class Error404NotFoundDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250729203856_AddInitialEntitiesToDb")]
+    partial class AddInitialEntitiesToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
