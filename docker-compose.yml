@@ -1,0 +1,35 @@
+services:
+  error404notlost_webasp:
+    image: ${DOCKER_REGISTRY-}error404notlostwebasp
+    build:
+      context: .
+      dockerfile: Error404NotLost_WEBASP/Dockerfile
+
+  sqlserver:
+      image: mcr.microsoft.com/mssql/server:2022-latest
+      container_name: error404notlost_sqlserver
+      environment:
+        ACCEPT_EULA: Y
+        SA_PASSWORD: YourStrong!Passw0rd
+        MSSQL_PID: Express
+      ports:
+        - "1433:1433"
+      volumes:
+        - sqlserver_data:/var/opt/mssql
+
+  minio:
+    image: minio/minio
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+
+volumes:
+  sqlserver_data:
+  minio_data:
