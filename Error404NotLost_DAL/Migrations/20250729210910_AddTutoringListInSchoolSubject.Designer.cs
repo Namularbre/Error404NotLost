@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Error404NotLost_DAL.Migrations
 {
     [DbContext(typeof(Error404NotLostDbContext))]
-    [Migration("20250729203856_AddInitialEntitiesToDb")]
-    partial class AddInitialEntitiesToDb
+    [Migration("20250729210910_AddTutoringListInSchoolSubject")]
+    partial class AddTutoringListInSchoolSubject
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,7 +132,7 @@ namespace Error404NotLost_DAL.Migrations
                     b.Property<int?>("LocationId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SchoolClassId")
+                    b.Property<int>("SchoolSubjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -148,7 +148,7 @@ namespace Error404NotLost_DAL.Migrations
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("SchoolClassId");
+                    b.HasIndex("SchoolSubjectId");
 
                     b.ToTable("Tutorings");
                 });
@@ -397,9 +397,9 @@ namespace Error404NotLost_DAL.Migrations
                         .WithMany()
                         .HasForeignKey("LocationId");
 
-                    b.HasOne("Error404NotLost_DAL.Entities.SchoolClass", "SchoolClass")
-                        .WithMany()
-                        .HasForeignKey("SchoolClassId")
+                    b.HasOne("Error404NotLost_DAL.Entities.SchoolSubject", "SchoolSubject")
+                        .WithMany("Tutorings")
+                        .HasForeignKey("SchoolSubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -407,7 +407,7 @@ namespace Error404NotLost_DAL.Migrations
 
                     b.Navigation("Location");
 
-                    b.Navigation("SchoolClass");
+                    b.Navigation("SchoolSubject");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -464,6 +464,11 @@ namespace Error404NotLost_DAL.Migrations
             modelBuilder.Entity("Error404NotLost_DAL.Entities.SchoolClass", b =>
                 {
                     b.Navigation("Subjects");
+                });
+
+            modelBuilder.Entity("Error404NotLost_DAL.Entities.SchoolSubject", b =>
+                {
+                    b.Navigation("Tutorings");
                 });
 #pragma warning restore 612, 618
         }

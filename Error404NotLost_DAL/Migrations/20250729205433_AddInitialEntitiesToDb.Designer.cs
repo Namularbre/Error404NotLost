@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Error404NotLost_DAL.Migrations
 {
     [DbContext(typeof(Error404NotLostDbContext))]
-    [Migration("20250729201639_AddInitialEntities")]
-    partial class AddInitialEntities
+    [Migration("20250729205433_AddInitialEntitiesToDb")]
+    partial class AddInitialEntitiesToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace Error404NotLost_DAL.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Error404NotLost_DAL.Entities.Location", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Locations");
+                });
 
             modelBuilder.Entity("Error404NotLost_DAL.Entities.SchoolClass", b =>
                 {
@@ -51,7 +71,7 @@ namespace Error404NotLost_DAL.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("SchoolClass");
+                    b.ToTable("SchoolClasses");
                 });
 
             modelBuilder.Entity("Error404NotLost_DAL.Entities.SchoolSubject", b =>
@@ -89,6 +109,48 @@ namespace Error404NotLost_DAL.Migrations
                     b.HasIndex("SchoolClassId");
 
                     b.ToTable("SchoolSubjects");
+                });
+
+            modelBuilder.Entity("Error404NotLost_DAL.Entities.Tutoring", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AuthorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SchoolClassId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("SchoolClassId");
+
+                    b.ToTable("Tutorings");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -319,6 +381,31 @@ namespace Error404NotLost_DAL.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
+
+                    b.Navigation("SchoolClass");
+                });
+
+            modelBuilder.Entity("Error404NotLost_DAL.Entities.Tutoring", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Error404NotLost_DAL.Entities.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId");
+
+                    b.HasOne("Error404NotLost_DAL.Entities.SchoolClass", "SchoolClass")
+                        .WithMany()
+                        .HasForeignKey("SchoolClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Location");
 
                     b.Navigation("SchoolClass");
                 });
