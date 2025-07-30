@@ -20,6 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 // Custom service registration
+builder.Services.AddScoped<ISchoolClassService, SchoolClassService>();
 builder.Services.AddScoped<ISchoolSubjectService, SchoolSubjectService>();
 
 var app = builder.Build();

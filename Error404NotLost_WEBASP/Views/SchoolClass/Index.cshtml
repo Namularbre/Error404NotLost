@@ -1,0 +1,27 @@
+﻿@using Error404NotLost_DTO.Global;
+@model List<SchoolClassListingDto>
+
+@*
+    This view displays a list of school classes.
+*@
+@{
+    ViewData["Title"] = "Promotions";
+}
+
+<h1>Promotions</h1>
+
+@if (Model.Count > 0)
+{
+    <ul>
+        @foreach (var schoolClass in Model)
+        {
+            <li>
+                <p>@schoolClass.Name</p>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="alert alert-info">Aucune promotion trouvée</p>
+}

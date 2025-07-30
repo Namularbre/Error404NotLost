@@ -1,10 +1,12 @@
 ﻿using Error404NotLost_DAL;
+using Error404NotLost_DTO.Global;
+using Microsoft.EntityFrameworkCore;
 
 namespace Error404NotLost_BLL.Services
 {
     public interface ISchoolSubjectService
     {
-        // Define methods for the SchoolSubjectService here
+        Task<List<SchoolSubjectListingDto>> ListSchoolSubject();
     }
 
     /// <summary>
@@ -19,6 +21,15 @@ namespace Error404NotLost_BLL.Services
             _context = context;
         }
 
-        // Implement methods for manipulating school subjects here
+        public async Task<List<SchoolSubjectListingDto>> ListSchoolSubject()
+        {
+            return await _context.SchoolSubjects
+                .Select(s => new SchoolSubjectListingDto
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                })
+                .ToListAsync();
+        }
     }
 }
