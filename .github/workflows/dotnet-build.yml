@@ -17,11 +17,8 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
-    - name: Move to the directory of the project
-      run: cd Error404NotLost_WEBASP
-
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./Error404NotLost_WEBASP
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./Error404NotLost_WEBASP --no-restore
