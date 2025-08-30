@@ -4,13 +4,16 @@ TODO: Add application description, functionality, usage/contribution instruction
 
 ## Default admin user
 
-By default, an admin user is created with the following credentials:
-- Email: `admin@knowledge-keeper.com`
-- Password: `Admin@123`
+The application need an admin user to manage the application.
+The default admin user credentials are defined with environnement variables :
+- Email: `AdminSettingsEmail`
+- Password: `AdminSettingsPassword`
 
 The admin user has the `admin` role that allows him to manage the application, users, and content.
 
-**Make sure to change these credentials after the first login for security purposes.**
+In `the docker-compose.yml` file the variables are already set but :
+- **Make sure to change these credentials after the first login for security purposes.**
+- **Make sure to use secrets in production environment. (Docker or dotnet secrets)**
 
 ## Migration
 
