@@ -6,13 +6,16 @@ namespace Error404NotLost_WEBASP.Controllers
 {
     public class SchoolClassController : BaseController
     {
+        private readonly ILogger<SchoolClassController> _logger;
         private readonly SchoolClassService _schoolClassService;
 
-        public SchoolClassController(SchoolClassService schoolClassService)
+        public SchoolClassController(ILogger<SchoolClassController> logger, SchoolClassService schoolClassService)
         {
+            _logger = logger;
             _schoolClassService = schoolClassService;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
@@ -26,6 +29,7 @@ namespace Error404NotLost_WEBASP.Controllers
             return View();
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(SchoolClassCreationDto schoolClassDto)
         {
             if (!ModelState.IsValid)

@@ -19,6 +19,7 @@ namespace Error404NotLost_WEBASP.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
