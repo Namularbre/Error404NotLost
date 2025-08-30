@@ -1,7 +1,9 @@
 using Error404NotLost_BLL.Services;
 using Error404NotLost_DAL;
 using Error404NotLost_WEBASP.Middleware;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +19,17 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 // Define the IdentityUser and configure Identity options
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<Error404NotLostDbContext>();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    var policy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+    options.Filters.Add(new AuthorizeFilter(policy));
+});
 
 // Custom service registration
-builder.Services.AddScoped<ISchoolClassService, SchoolClassService>();
-builder.Services.AddScoped<ISchoolSubjectService, SchoolSubjectService>();
+builder.Services.AddScoped<SchoolClassService>();
+builder.Services.AddScoped<SchoolSubjectService>();
 
 var app = builder.Build();
 

@@ -6,9 +6,9 @@ namespace Error404NotLost_WEBASP.Controllers
 {
     public class SchoolClassController : Controller
     {
-        private readonly ISchoolClassService _schoolClassService;
+        private readonly SchoolClassService _schoolClassService;
 
-        public SchoolClassController(ISchoolClassService schoolClassService)
+        public SchoolClassController(SchoolClassService schoolClassService)
         {
             _schoolClassService = schoolClassService;
         }
@@ -18,6 +18,32 @@ namespace Error404NotLost_WEBASP.Controllers
             List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
 
             return View(schoolClasses);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> Create(SchoolClassCreationDto schoolClassDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(schoolClassDto);
+            }
+            var existingClass = await _schoolClassService.GetSchoolClassByName(schoolClassDto.Name);
+            if (existingClass != null)
+            {
+                ModelState.AddModelError("Name", "Une classe avec ce nom existe déjà.");
+                return View(schoolClassDto);
+            }
+
+            // L'utilisateur est forcément connecté pour créer une classe
+            string authorId = User.Identity?.Name!;
+
+            await _schoolClassService.AddSchoolClass(schoolClassDto, authorId);
+            return RedirectToAction("Index");
         }
     }
 }
