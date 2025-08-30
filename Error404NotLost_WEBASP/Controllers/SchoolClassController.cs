@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Error404NotLost_WEBASP.Controllers
 {
-    public class SchoolClassController : Controller
+    public class SchoolClassController : BaseController
     {
         private readonly SchoolClassService _schoolClassService;
 
@@ -29,9 +29,8 @@ namespace Error404NotLost_WEBASP.Controllers
         public async Task<IActionResult> Create(SchoolClassCreationDto schoolClassDto)
         {
             if (!ModelState.IsValid)
-            {
                 return View(schoolClassDto);
-            }
+            
             var existingClass = await _schoolClassService.GetSchoolClassByName(schoolClassDto.Name);
             if (existingClass != null)
             {
@@ -39,8 +38,8 @@ namespace Error404NotLost_WEBASP.Controllers
                 return View(schoolClassDto);
             }
 
-            // L'utilisateur est forcément connecté pour créer une classe
-            string authorId = User.Identity?.Name!;
+            // You must be logged in to use this action
+            string authorId = GetCurrentUserId()!;
 
             await _schoolClassService.AddSchoolClass(schoolClassDto, authorId);
             return RedirectToAction("Index");
