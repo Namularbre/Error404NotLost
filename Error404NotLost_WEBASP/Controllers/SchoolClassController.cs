@@ -1,5 +1,7 @@
 ﻿using Error404NotLost_BLL.Services;
+using Error404NotLost_DAL.Roles;
 using Error404NotLost_DTO.Global;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Error404NotLost_WEBASP.Controllers
@@ -24,12 +26,14 @@ namespace Error404NotLost_WEBASP.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public async Task<IActionResult> Create(SchoolClassCreationDto schoolClassDto)
         {
             if (!ModelState.IsValid)

@@ -1,10 +1,26 @@
 using Error404NotLost_BLL.Services;
 using Error404NotLost_DAL;
+using Error404NotLost_DAL.Roles;
 using Error404NotLost_WEBASP.Middleware;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+
+static async Task CreatesRoles(IServiceProvider serviceProvider)
+{
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    string[] roleNames = { nameof(ERoles.Admin), nameof(ERoles.Moderator) };
+    IdentityResult roleResult;
+    foreach (var roleName in roleNames)
+    {
+        var roleExist = await roleManager.RoleExistsAsync(roleName);
+        if (!roleExist)
+        {
+            roleResult = await roleManager.CreateAsync(new IdentityRole(roleName));
+        }
+    }
+}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +34,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Define the IdentityUser and configure Identity options
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<Error404NotLostDbContext>();
+
 builder.Services.AddControllersWithViews(options =>
 {
     var policy = new AuthorizationPolicyBuilder()
@@ -32,6 +50,11 @@ builder.Services.AddScoped<SchoolClassService>();
 builder.Services.AddScoped<SchoolSubjectService>();
 
 var app = builder.Build();
+
+// Create roles at startup
+using var scope = app.Services.CreateScope();
+var services = scope.ServiceProvider;
+await CreatesRoles(services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
