@@ -2,6 +2,16 @@
 
 TODO: Add application description, functionality, usage/contribution instructions, authors.
 
+## Default admin user
+
+By default, an admin user is created with the following credentials:
+- Email: `admin@knowledge-keeper.com`
+- Password: `Admin@123`
+
+The admin user has the `admin` role that allows him to manage the application, users, and content.
+
+**Make sure to change these credentials after the first login for security purposes.**
+
 ## Migration
 
 You can copy this command, make sure you have dotnet 8 installed with entity framework core tools.
