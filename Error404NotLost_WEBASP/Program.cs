@@ -7,6 +7,48 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 
+#region Admin User Creation
+
+static async Task CreateAdminUser(IServiceProvider serviceProvider)
+{
+    var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string adminEmail = "admin@knowledge-keeper.com";
+    string adminPassword = "Admin@123";
+    string adminRole = nameof(ERoles.Admin);
+
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        adminUser = new IdentityUser
+        {
+            UserName = adminEmail,
+            Email = adminEmail,
+            EmailConfirmed = true
+        };
+
+        var result = await userManager.CreateAsync(adminUser, adminPassword);
+        if (result.Succeeded)
+        {
+            if (!await roleManager.RoleExistsAsync(adminRole))
+            {
+                await roleManager.CreateAsync(new IdentityRole(adminRole));
+            }
+
+            await userManager.AddToRoleAsync(adminUser, adminRole);
+        }
+        else
+        {
+            throw new Exception(string.Join(", ", result.Errors.Select(e => e.Description)));
+        }
+    }
+}
+
+#endregion
+
+#region Role Creation
+
 static async Task CreatesRoles(IServiceProvider serviceProvider)
 {
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -21,6 +63,8 @@ static async Task CreatesRoles(IServiceProvider serviceProvider)
         }
     }
 }
+
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,10 +95,11 @@ builder.Services.AddScoped<SchoolSubjectService>();
 
 var app = builder.Build();
 
-// Create roles at startup
+// Create roles & admin user at startup
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 await CreatesRoles(services);
+await CreateAdminUser(services);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
