@@ -11,11 +11,14 @@ using Microsoft.EntityFrameworkCore;
 
 static async Task CreateAdminUser(IServiceProvider serviceProvider)
 {
+    string adminSettingsEmailEnvironnementVariable = "AdminSettingsEmail";
+    string adminSettingsPasswordEnvironnementVariable = "AdminSettingsPassword";
+
     var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-    string adminEmail = "admin@knowledge-keeper.com";
-    string adminPassword = "Admin@123";
+    
+    string adminEmail = Environment.GetEnvironmentVariable(adminSettingsEmailEnvironnementVariable) ?? throw new ArgumentException($"Missing {adminSettingsEmailEnvironnementVariable} environnement variable");
+    string adminPassword = Environment.GetEnvironmentVariable(adminSettingsPasswordEnvironnementVariable) ?? throw new ArgumentException($"Missing {adminSettingsPasswordEnvironnementVariable} environnement variable");
     string adminRole = nameof(ERoles.Admin);
 
     var adminUser = await userManager.FindByEmailAsync(adminEmail);
