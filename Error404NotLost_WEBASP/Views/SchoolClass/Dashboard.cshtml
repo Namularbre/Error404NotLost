@@ -1,0 +1,53 @@
+﻿@using Error404NotLost_DTO.Global;
+@model List<SchoolClassListingDto>;
+
+@*
+    Dashboard view for SchoolClass entity.
+*@
+@{
+    ViewData["Title"] = "School Class Dashboard";
+}
+
+<h1>School Class Dashboard</h1>
+
+<a role="button" class="btn btn-primary" asp-action="Create" asp-controller="SchoolClass">Create</a>
+
+@if (Model.Count > 0)
+{
+    <table class="table table-bordered table-striped caption-top">
+        <caption>List of school class</caption>
+        <thead>
+            <tr>
+                <th scope="col">@Html.DisplayNameFor(Model => Model[0].Name)</th>
+                <th scope="col">@Html.DisplayNameFor(Model => Model[0].AuthorName)</th>
+                <th scope="col">@Html.DisplayNameFor(Model => Model[0].CreatedAt)</th>
+                <th scope="col">@Html.DisplayNameFor(Model => Model[0].UpdatedAt)</th>
+                <th scope="col">See school subject</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var schoolClass in Model)
+            {
+                <tr>
+                    <td>@schoolClass.Name</td>
+                    <td>@schoolClass.AuthorName</td>
+                    <td>@schoolClass.CreatedAt.ToLocalTime()</td>
+                    <td>@schoolClass.UpdatedAt.ToLocalTime()</td>
+                    <td>School Subjects</td>
+                    <td>
+                        <a asp-action="Update" asp-controller="SchoolClass" asp-route-id="@schoolClass.Id" class="btn btn-primary">Update</a>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="alert alert-info">There are no school subjects.</p>
+}

@@ -64,5 +64,32 @@ namespace Error404NotLost_BLL.Services
             _context.SchoolClasses.Add(schoolClass);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<SchoolClassUpdateDto?> GetSchoolClassUpdateDtoById(int id)
+        {
+            return await _context.SchoolClasses
+                .Where(w => w.Id == id)
+                .Select(s => new SchoolClassUpdateDto
+                {
+                    Id = s.Id,
+                    Name = s.Name
+                })
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateSchoolClass(SchoolClassUpdateDto dto)
+        {
+            var schoolClass = await _context.SchoolClasses.FindAsync(dto.Id);
+            if (schoolClass == null)
+                throw new KeyNotFoundException("School class not found.");
+
+            if (await _context.SchoolClasses.AnyAsync(sc => sc.Name == dto.Name && sc.Id != dto.Id))
+                throw new InvalidOperationException("A school class with the same name already exists.");
+
+            schoolClass.Name = dto.Name;
+            schoolClass.UpdatedAt = DateTime.UtcNow;
+            _context.SchoolClasses.Update(schoolClass);
+            await _context.SaveChangesAsync();
+        }
     }
 }

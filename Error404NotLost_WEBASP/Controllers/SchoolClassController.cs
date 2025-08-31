@@ -25,6 +25,12 @@ namespace Error404NotLost_WEBASP.Controllers
             return View(schoolClasses);
         }
 
+        public async Task<IActionResult> Dashboard()
+        {
+            List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
+            return View(schoolClasses);
+        }
+
         [HttpGet]
         [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public IActionResult Create()
@@ -50,7 +56,35 @@ namespace Error404NotLost_WEBASP.Controllers
             string authorId = GetCurrentUserId()!;
 
             await _schoolClassService.AddSchoolClass(schoolClassDto, authorId);
-            return RedirectToAction("Index");
+            return RedirectToAction("Dashboard");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
+        public async Task<IActionResult> Update(int id)
+        {
+            var schoolClass = await _schoolClassService.GetSchoolClassUpdateDtoById(id);
+
+            if (schoolClass == null)
+                return NotFound();
+
+            return View(schoolClass);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
+        public async Task<IActionResult> Update(SchoolClassUpdateDto schoolClassDto)
+        {
+            if (!ModelState.IsValid)
+                return View(schoolClassDto);
+            var existingClass = await _schoolClassService.GetSchoolClassByName(schoolClassDto.Name);
+            if (existingClass != null && existingClass.Id != schoolClassDto.Id)
+            {
+                ModelState.AddModelError("Name", "Une classe avec ce nom existe déjà.");
+                return View(schoolClassDto);
+            }
+            await _schoolClassService.UpdateSchoolClass(schoolClassDto);
+            return RedirectToAction("Dashboard");
         }
     }
 }
