@@ -91,5 +91,12 @@ namespace Error404NotLost_BLL.Services
             _context.SchoolClasses.Update(schoolClass);
             await _context.SaveChangesAsync();
         }
+
+        public async Task DeleteSchoolClass(SchoolClass schoolClass)
+        {
+            await _context.SchoolClasses
+                .Where(sc => sc.Id == schoolClass.Id)
+                .ExecuteDeleteAsync();
+        }
     }
 }

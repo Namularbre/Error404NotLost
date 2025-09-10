@@ -56,7 +56,7 @@ namespace Error404NotLost_WEBASP.Controllers
             string authorId = GetCurrentUserId()!;
 
             await _schoolClassService.AddSchoolClass(schoolClassDto, authorId);
-            return RedirectToAction("Dashboard");
+            return RedirectToAction(nameof(Dashboard));
         }
 
         [HttpGet]
@@ -84,7 +84,16 @@ namespace Error404NotLost_WEBASP.Controllers
                 return View(schoolClassDto);
             }
             await _schoolClassService.UpdateSchoolClass(schoolClassDto);
-            return RedirectToAction("Dashboard");
+            return RedirectToAction(nameof(Dashboard));
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var schoolClass = await _schoolClassService.GetSchoolClassById(id);
+            if (schoolClass == null)
+                return NotFound();
+            await _schoolClassService.DeleteSchoolClass(schoolClass);
+            return RedirectToAction(nameof(Dashboard));
         }
     }
 }
