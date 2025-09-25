@@ -3,6 +3,9 @@ using System.Security.Claims;
 
 namespace Error404NotLost_WEBASP.Controllers
 {
+    /// <summary>
+    /// Base controller to provide common functionalities for all controllers
+    /// </summary>
     public class BaseController : Controller
     {
         /// <summary>

@@ -19,12 +19,12 @@ In `the docker-compose.yml` file the variables are already set but :
 
 You can copy this command, make sure you have dotnet 8 installed with entity framework core tools.
 ```bash
-dotnet ef migrations add InitialMigration --project .\Error404NotLost_DAL\ --startup-project .\Error404NotLost_WEBASP\
+dotnet ef database update --project .\Error404NotLost_DAL\ --startup-project .\Error404NotLost_WEBASP\ --no-build --connection "Server=localhost;Database=Error404NotLost;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
 ```
 
 Then update the database with:
 ```bash
-dotnet ef database update --project .\Error404NotLost_DAL\ --startup-project .\Error404NotLost_WEBASP\
+dotnet ef database update --project .\Error404NotLost_DAL\ --startup-project .\Error404NotLost_WEBASP\ --no-build --connection "Server=localhost;Database=Error404NotLost;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;"
 ```
 
 ## Build

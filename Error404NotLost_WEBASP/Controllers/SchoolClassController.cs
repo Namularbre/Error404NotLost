@@ -17,7 +17,6 @@ namespace Error404NotLost_WEBASP.Controllers
             _schoolClassService = schoolClassService;
         }
 
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
@@ -25,13 +24,13 @@ namespace Error404NotLost_WEBASP.Controllers
             return View(schoolClasses);
         }
 
+        [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public async Task<IActionResult> Dashboard()
         {
             List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
             return View(schoolClasses);
         }
 
-        [HttpGet]
         [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public IActionResult Create()
         {
@@ -59,7 +58,6 @@ namespace Error404NotLost_WEBASP.Controllers
             return RedirectToAction(nameof(Dashboard));
         }
 
-        [HttpGet]
         [Authorize(Roles = nameof(ERoles.Admin) + "," + nameof(ERoles.Moderator))]
         public async Task<IActionResult> Update(int id)
         {
