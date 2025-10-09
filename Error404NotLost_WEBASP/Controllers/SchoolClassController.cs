@@ -3,6 +3,7 @@ using Error404NotLost_DAL.Roles;
 using Error404NotLost_DTO.Global;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Error404NotLost_WEBASP.Controllers
 {
@@ -20,8 +21,9 @@ namespace Error404NotLost_WEBASP.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            bool isAdmin = User.IsInRole(nameof(ERoles.Admin)) || User.IsInRole(nameof(ERoles.Moderator));
+            ViewBag.IsAdmin = isAdmin;
             List<SchoolClassListingDto> schoolClasses = await _schoolClassService.GetAllSchoolClass();
-
             return View(schoolClasses);
         }
 
