@@ -15,5 +15,20 @@ namespace Error404NotLost_DAL
         public DbSet<SchoolClass> SchoolClasses { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Tutoring> Tutorings { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SchoolClass>()
+                .HasIndex(sc => sc.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Location>()
+                .HasIndex(l => l.Name)
+                .IsUnique();
+
+
+        }
     }
 }

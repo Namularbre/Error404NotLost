@@ -4,15 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Error404NotLost_BLL.Services
 {
-    public interface ISchoolSubjectService
-    {
-        Task<List<SchoolSubjectListingDto>> ListSchoolSubject();
-    }
-
     /// <summary>
     /// Manages school subjects in the application.
     /// </summary>
-    public class SchoolSubjectService : ISchoolSubjectService
+    public class SchoolSubjectService
     {
         private readonly Error404NotLostDbContext _context;
 

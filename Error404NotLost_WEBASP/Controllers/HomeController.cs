@@ -1,10 +1,11 @@
 using System.Diagnostics;
 using Error404NotLost_WEBASP.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Error404NotLost_WEBASP.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
 
@@ -18,6 +19,7 @@ namespace Error404NotLost_WEBASP.Controllers
             return View();
         }
 
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();

@@ -37,6 +37,19 @@ git clone git@github.com:Namularbre/Error404NotLost.git
     docker compose restart
     ```
    
+## Default admin user
+
+The application need an admin user to manage the application.
+The default admin user credentials are defined with environnement variables :
+- Email: `AdminSettingsEmail`
+- Password: `AdminSettingsPassword`
+
+The admin user has the `admin` role that allows him to manage the application, users, and content.
+
+In `the docker-compose.yml` file the variables are already set but :
+- **Make sure to change these credentials after the first login for security purposes.**
+- **Make sure to use secrets in production environment. (Docker or dotnet secrets)**
+
 ## Migration
 
 You can copy this command, make sure you have dotnet 8 installed with entity framework core tools.
