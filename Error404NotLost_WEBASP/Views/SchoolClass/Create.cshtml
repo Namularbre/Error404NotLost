@@ -1,0 +1,22 @@
+﻿@using Error404NotLost_DTO.Global;
+@model SchoolClassCreationDto;
+
+@*
+    This is the Create view for SchoolClass.
+*@
+@{
+    ViewData["Title"] = "Create School Class";
+}
+
+<h1>Create a school class</h1>
+
+<a role="button" asp-action="Dashboard" asp-controller="SchoolClass" class="btn btn-secondary">Return</a>
+
+<form asp-action="Create" asp-controller="SchoolClass" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

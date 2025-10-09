@@ -1,0 +1,22 @@
+﻿@using Error404NotLost_DTO.Global;
+@model SchoolClassUpdateDto;
+@*
+    View for updating a SchoolClass entity.
+*@
+@{
+    ViewData["Title"] = "Update School Class";
+}
+
+<h1>Update School Class</h1>
+
+<a class="btn btn-primary" asp-action="Dashboard" asp-controller="SchoolClass" role="button">Return</a>
+
+<form asp-action="Update" asp-controller="SchoolClass" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label class="form-label" asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Update</button>
+</form>

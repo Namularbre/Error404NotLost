@@ -1,9 +1,20 @@
 services:
   error404notlost_webasp:
     image: ${DOCKER_REGISTRY-}error404notlostwebasp
+    container_name: error404notlost_webasp
     build:
       context: .
       dockerfile: Error404NotLost_WEBASP/Dockerfile
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=Error404NotLost;User Id=sa;Password=YourStrong!Passw0rd;TrustServerCertificate=True;
+        - AdminSettingsEmail=admin@knowledge-keeper.com
+        - AdminSettingsPassword=Admin@123
+    ports:
+        - "8080:80"
+    depends_on:
+        - sqlserver
+        - minio
 
   sqlserver:
       image: mcr.microsoft.com/mssql/server:2022-latest
