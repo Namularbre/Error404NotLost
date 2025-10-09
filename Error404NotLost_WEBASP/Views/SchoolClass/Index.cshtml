@@ -10,6 +10,12 @@
 
 <h1>Promotions</h1>
 
+@if (ViewBag.isAdmin != null && ViewBag.isAdmin == true)
+{
+    <a role="button" class="btn btn-primary" asp-action="Dashboard" asp-controller="SchoolClass">Dashboard</a>
+}
+
+
 @if (Model.Count > 0)
 {
     <ul>
