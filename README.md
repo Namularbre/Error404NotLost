@@ -41,8 +41,8 @@ git clone git@github.com:Namularbre/Error404NotLost.git
 
 The application need an admin user to manage the application.
 The default admin user credentials are defined with environnement variables :
-- Email: `AdminSettingsEmail`
-- Password: `AdminSettingsPassword`
+- Email: `admin@knowledge-keeper.com`
+- Password: `Admin@123`
 
 The admin user has the `admin` role that allows him to manage the application, users, and content.
 
@@ -71,5 +71,7 @@ dotnet build .\Error404NotLost_WEBASP\Error404NotLost_WEBASP.csproj
 ## Authors
 
 [Namulabre](https://github.com/Namularbre)
+
+[paul-rezzonico](https://github.com/paul-rezzonico)
 
 **Other authors need to be added here.**
